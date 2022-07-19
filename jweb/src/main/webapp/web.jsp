@@ -4,9 +4,14 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>Web</title>
 </head>
 <body>
-
+	<h2>À¥ °³¹ß ±âÃÊ</h2>
+	<ul>
+		<li>HTML</li>
+		<li>CSS</li>
+		<li>Java script</li>
+	</ul>
 </body>
 </html>
