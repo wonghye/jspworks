@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;jweb/src/main/webapp/ch02/ch03&apos; to &apos;include&apos;" description="Rename resource &apos;ch03&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/ch02/ch03" name="include" stamp="1658191908253" updateReferences="true"/>
+</session>
