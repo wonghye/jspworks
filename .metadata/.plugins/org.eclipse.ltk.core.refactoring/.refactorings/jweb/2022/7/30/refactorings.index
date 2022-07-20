@@ -7,3 +7,10 @@
 1658212895114	Rename resource 'reponse.jsp'
 1658217564864	Copy compilation unit
 1658222275882	Rename resource 'NewFile.jsp'
+1658277883505	Move 'sayHello.jsp' to 'get'
+1658279501729	Move 'joinForm.jsp' to 'post'
+1658293865255	Move 'servlet.jsp' to 'webapp'
+1658295149488	Move 'servlet.jsp' to 'servlet'
+1658295303196	Move 'servlet.jsp' to 'webapp'
+1658301110389	Rename resource 'sessoin02.jsp'
+1658303537119	Rename resource 'sessoin01_process.jsp'
