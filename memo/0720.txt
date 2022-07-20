@@ -1,0 +1,36 @@
+jsp태그
+-지시자 태그
+-스크립트 태그
+-액션태그
+
+빈: 자바클래스
+
+내장객체
+-out / request / response
+
+폼
+method : get, post
+
+쿼리스트링
+
+mvc 패턴
+ model view control
+
+서블릿 - jsp
+서블릿 만들기 (클래스)
+
+1.xml 설정 - 클래스 상속
+2.java 코드 (@-애너테이션)
+
+url pattern - / first
+
+서블릿 응답처리 - html 형식
+서블릿 - >웹브라우저
+
+jsp(폼) -> 요청 ㅡ>서블릿(응답)
+
+
+
+세션 session - login 
+request < session 
+저장상태 유지
