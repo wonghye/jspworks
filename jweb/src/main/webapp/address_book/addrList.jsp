@@ -19,7 +19,7 @@
 				<th>이름</th><th>전화번호</th><th>이메일</th><th>성별</th><th>보기</th><th>삭제</th>
 			</tr>
 			<%
-				for(int i = 0; i<abDAO.getListAll().size(); i++){
+				for(int i=0; i<abDAO.getListAll().size(); i++){
 					AddrBook addrBook = abDAO.getListAll().get(i);
 			%>
 			<tr>
@@ -35,6 +35,5 @@
 			</tr>
 			<% } %>
 		</table>
-	</div>
 </body>
 </html>

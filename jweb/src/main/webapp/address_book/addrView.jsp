@@ -38,7 +38,7 @@
 			  	}
 			%>	
 			</table>
-			<p><a href="addrList.jsp" >목록 보기</a></p>
+			<p><a href="./addrList.jsp" >목록 보기</a></p>
 		</div>
 </body>
 </html>
