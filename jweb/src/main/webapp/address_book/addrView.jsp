@@ -5,32 +5,40 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>주소록 상세 보기</title>
 <link rel="stylesheet" href="../resources/css/addrbook.css">
 </head>
 <jsp:useBean id="abDAO" class="com.dao.AddrBookDAO" scope="application" />
-<%
-	String uname = request.getParameter("username"); //username 속성 값 가져오기
-    AddrBook addrBook = abDAO.getAbByUserName(uname); //dao에서 getAbByUserName() 호출함
-%>
 <body>
 		<div id="container">
-		<h2>상세 보기</h2>
-		<hr>
-		<table id="tbl_view">
-			<tr>
-				<td>이름</td><td><%=addrBook.getUsername() %>
-			</tr>
-			<tr>
-				<td>전화번호</td><td><%=addrBook.getTel() %>
-			</tr>
-			<tr>
-				<td>이메일</td><td><%=addrBook.getEmail() %>
-			</tr>
-			<tr>
-				<td>성별</td><td><%=addrBook.getGender() %>
-			</tr>
-		</table>
-	</div>
+			<h2>상세 보기</h2>
+			<hr>
+			<table id="tbl_view">
+			<%
+			String uname = request.getParameter("username"); //username 속성 값 가져오기
+	   
+		  	if(session.getAttribute("userName") != null){
+		  		AddrBook addrBook = abDAO.getAbByUserName(uname);
+			%>
+				<tr>
+					<td>이름</td><td><%=addrBook.getUsername() %>
+				</tr>
+				<tr>
+					<td>전화번호</td><td><%=addrBook.getTel() %>
+				</tr>
+				<tr>
+					<td>이메일</td><td><%=addrBook.getEmail() %>
+				</tr>
+				<tr>
+					<td>성별</td><td><%=addrBook.getGender() %>
+				</tr>
+			<%
+				}else{
+			  		response.sendRedirect("./addrForm.jsp"); 
+			  	}
+			%>	
+			</table>
+			<p><a href="addrList.jsp" >목록 보기</a></p>
+		</div>
 </body>
 </html>
