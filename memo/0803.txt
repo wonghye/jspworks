@@ -1,0 +1,10 @@
+jstl 
+주소록
+회원관리형게시판1 - jsp, db-oracle
+(회원,게시판)
+
+회원관리형게시판 2 (mvc) - jsp/servlet, el(jstl)
+(회원,게시판) db - mysql
+
+memberBoard 플젝
+
