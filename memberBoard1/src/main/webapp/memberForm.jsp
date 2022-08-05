@@ -7,8 +7,9 @@
 <meta charset="UTF-8">
 <title>회원 가입</title>
 <link rel="stylesheet" href="./resources/css/common.css">
+<script src="./resources/js/checkMember.js"></script>
 </head>
-<jsp:useBean id="memberDAO" class="com.repository.MemberDAO"></jsp:useBean>
+<jsp:useBean id="memberDAO" class="com.repository.MemberDAO" scope="application" />
 <body>
 	<jsp:include page="./menu.jsp"/>
 	<div id="container">
@@ -16,7 +17,7 @@
 			<h1>회원 가입</h1>
 		</div>
 		<div>
-		<form action="./addMember.jsp" method="post">
+		<form action="./addMember.jsp" method="post" name="regForm">
 				<table class="tbl">
 					<tr>
 						<td>아이디</td>
@@ -24,11 +25,11 @@
 					</tr>
 					<tr>
 						<td>비밀번호</td>
-						<td><input type="password" name="passwd" placeholder="PASSWORD" ></td>
+						<td><input type="text" name="passwd" placeholder="PASSWORD" ></td>
 					</tr>
 					<tr>
 						<td>비밀번호 확인</td>
-						<td><input type="password" name="passwd_confirm" placeholder="PASSWORD_CONFIRM" ></td>
+						<td><input type="text" name="passwd_confirm" placeholder="PASSWORD_CONFIRM" ></td>
 					</tr>
 					<tr>
 						<td>이름</td>
@@ -45,7 +46,7 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input type="submit" value="등록">
+							<input type="button" value="등록" onclick="checkMember()">
 							<input type="reset" value="취소">
 						</td>
 					</tr>

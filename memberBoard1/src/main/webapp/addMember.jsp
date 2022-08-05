@@ -1,7 +1,7 @@
 <%@page import="com.repository.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:useBean id="memberDAO" class="com.repository.MemberDAO"></jsp:useBean>    
+<jsp:useBean id="memberDAO" class="com.repository.MemberDAO"/>    
 <% 
 	//한글 인코딩 
 	request.setCharacterEncoding("utf-8");
@@ -24,5 +24,5 @@
 	memberDAO.addMember(member);
 	
 	//화면 이동
-	response.sendRedirect("./memberList.jsp");
+	response.sendRedirect("./main.jsp");
 %>
