@@ -83,6 +83,24 @@ public class MemberDAO {
 		return false;
 	}
 	
+	//회원 이름 가져오기 메소드
+	public String getNameByLogin(String memberId) {
+		
+		try {
+			conn = JDBCUtil.getConnection();  //db연결
+			String sql = "SELECT name FROM t_member WHERE memberId=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rs = pstmt.executeQuery();
+			if(rs.next()) { // 같은 이름이 있으면
+				return rs.getString("name");  //DB테이블에서 가져옴
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
 	//회원 삭제
 	public void deleteMember(String memberId) {
 		

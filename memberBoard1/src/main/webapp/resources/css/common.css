@@ -4,6 +4,7 @@
 li{list-style: none; }
 a{text-decoration: none;color :#000;}
 input[type="text"],[type="password"]{width:200px; height: 25px;}
+input[type="submit"], [type="reset"],[type="button"]{width: 60px; height: 30px;}
 
 
 /* navbar 스타일 */
@@ -38,7 +39,7 @@ footer{margin-left: 20%; margin-top: 10%;}
 
 .tbl_bo_view, td{border: 1px solid #ccc; border-collapse: collapse; 
 	padding: 10px;}
-.tbl_bo_view input{width:580px; height: 30px;}
+.tbl_bo_view .bo_v_title, .tbl_bo_view .bo_v_id{width:580px; height: 30px;}
 .tbl_bo_view td:nth-child(1){width: 100px; }
 .tbl_bo_view input[type="submit"], input[type="button"]{width:60px; height: 30px;}
 
