@@ -8,7 +8,7 @@
 <title>회원 로그인</title>
 <link rel="stylesheet" href="./resources/css/common.css">
 </head>
-<jsp:useBean id="memberDAO" class="com.repository.MemberDAO"></jsp:useBean>
+<jsp:useBean id="memberDAO" class="com.repository.MemberDAO" scope="application"/>
 <body>
 	<jsp:include page="./menu.jsp"/>
 	<div id="container">

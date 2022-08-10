@@ -6,46 +6,51 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JDBCUtil {
-	private static String driverClass = "oracle.jdbc.OracleDriver";
-	private static String url = "jdbc:oracle:thin:@localhost:1521:xe";
-	/*
-	 * private static String url = "jdbc:mysql://localhost:3306/" +
-	 * "javaweb?useUnicode=true&serverTimezone=Asia/Seoul";
-	 */
-	private static String username = "c##jweb";
-	private static String password = "54321";
+public class JDBCUtil3 {
+
+	private static String dirverClass = "oracle.jdbc.OracleDriver";
+	private static String url ="jdbc:oracle:thin:@localhost:1521:xe";
 	
-	//DB 연결 메소드
+	private static String username = "system";
+	private static String passwd = "12345";
+	
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+		
+	//db연결 메서드
 	public static Connection getConnection() {
 		try {
-			Class.forName(driverClass);
-			return DriverManager.getConnection(url, username, password);
-		}catch (Exception e) {
+			Class.forName(dirverClass);
+			return DriverManager.getConnection(url, username, passwd);
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	//DB 연결 종료 메소드
 	public static void close(Connection conn, PreparedStatement pstmt) {
 		if(pstmt != null) {
 			try {
 				pstmt.close();
-			} catch (SQLException e) {
+			}catch(Exception e){
 				e.printStackTrace();
+			}finally {
+				pstmt = null;
 			}
 		}
+		
 		if(conn != null) {
 			try {
 				conn.close();
-			} catch (SQLException e) {
+			}catch(Exception e){
 				e.printStackTrace();
+			}finally {
+				conn = null;
+			}
 			}
 		}
-	}
 	
-	//DB 연결 종료 메소드(ResultSet이 있는 경우)
 	public static void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
 		if(rs != null) {
 			try {
@@ -57,18 +62,22 @@ public class JDBCUtil {
 		if(pstmt != null) {
 			try {
 				pstmt.close();
-			} catch (SQLException e) {
+			}catch(Exception e){
 				e.printStackTrace();
+			}finally {
+				pstmt = null;
 			}
 		}
+		
 		if(conn != null) {
 			try {
 				conn.close();
-			} catch (SQLException e) {
+			}catch(Exception e){
 				e.printStackTrace();
+			}finally {
+				conn = null;
 			}
 		}
 	}
-	
-	
+
 }
