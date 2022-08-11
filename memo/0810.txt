@@ -1,0 +1,16 @@
+memberboard2 
+조회수 만들기
+= 상세보기 클릭시 조회수 +1 
+sql = select ~ where bnum=? 
+update set hi=hit+1 where bnum=?
+
+util3 - oracle
+util1 - workbench 연결해야함..
+
+jsp 1 , spring 부트 1개
+
+
+web마켓
+상품 -jsp
+회원,게시판 - el언어 사용
+

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.common.JDBCUtil3;
+import com.common.JDBCUtil;
 
 public class BoardDAO {
 	
@@ -16,9 +16,9 @@ public class BoardDAO {
 	
 	//게시글 쓰기
 	public void insertBoard(Board board) {
-		conn = JDBCUtil3.getConnection();
-		String sql = "INSERT INTO t_board(bnum, title, content, memberId)" 
-				+ " VALUES (b_seq.nextval, ?, ?, ?)";
+		conn = JDBCUtil.getConnection();
+		String sql = "INSERT INTO t_board(title, content, memberId)" 
+				+ " VALUES (?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getTitle()); //폼에 입력 데이터를 db에 저장
@@ -28,7 +28,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCUtil3.close(conn, pstmt);
+			JDBCUtil.close(conn, pstmt);
 		}
 	}
 
@@ -37,7 +37,7 @@ public class BoardDAO {
 		ArrayList<Board> boardList = new ArrayList<>();
 		
 		try {
-			conn = JDBCUtil3.getConnection();
+			conn = JDBCUtil.getConnection();
 			String sql = "SELECT * FROM t_board ORDER BY bnum DESC";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -54,7 +54,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCUtil3.close(conn, pstmt, rs);
+			JDBCUtil.close(conn, pstmt, rs);
 		}
 		
 		return boardList;
@@ -65,7 +65,7 @@ public class BoardDAO {
 	public Board getBoard(int bnum) {
 		Board board = new Board();
 		try {
-			conn= JDBCUtil3.getConnection();
+			conn= JDBCUtil.getConnection();
 			String sql = "SELECT * FROM t_board WHERE bnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bnum);
@@ -80,7 +80,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCUtil3.close(conn, pstmt, rs);
+			JDBCUtil.close(conn, pstmt, rs);
 		}
 		return board;
 	}
@@ -89,7 +89,7 @@ public class BoardDAO {
 	public void updateHit(int bnum) {
 		
 		try {
-			conn = JDBCUtil3.getConnection();
+			conn = JDBCUtil.getConnection();
 			String sql = "SELECT hit FROM t_board WHERE bnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bnum);
@@ -108,7 +108,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			JDBCUtil3.close(conn, pstmt, rs);
+			JDBCUtil.close(conn, pstmt, rs);
 		}
 		
 	}
@@ -117,7 +117,7 @@ public class BoardDAO {
 	//게시글 삭제
 	public void deleteBoard(int bnum) {
 		try {
-			conn = JDBCUtil3.getConnection();
+			conn = JDBCUtil.getConnection();
 			String sql = "DELETE FROM t_board WHERE bnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bnum);
@@ -125,13 +125,13 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCUtil3.close(conn, pstmt);
+			JDBCUtil.close(conn, pstmt);
 		}
 	}
 	
 	//게시글 수정
 	public void updateBoard(Board board) {
-		conn = JDBCUtil3.getConnection();
+		conn = JDBCUtil.getConnection();
 		String sql = "UPDATE t_board SET title=?, content=? WHERE bnum=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -142,7 +142,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCUtil3.close(conn, pstmt);
+			JDBCUtil.close(conn, pstmt);
 		}
 	}
 	
