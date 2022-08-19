@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import com.common.JDBCUtil;
 
-
 public class MemberDAO {
 	
 	Connection conn = null;
@@ -17,37 +16,38 @@ public class MemberDAO {
 	
 	//회원 추가
 	public void addMember(Member member) {
+		
 		try {
 			conn = JDBCUtil.getConnection();
-			String sql = "INSERT INTO t_member(memberid, passwd, name, gender) " 
-			+ "VALUES (? , ?, ?, ? )";
+			//칼럼에서 가입일이 생략된 경우이므로 열을 표기해야 함
+			String sql = "INSERT INTO t_member(memberid, passwd, name, gender)"
+					+ " VALUES (?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, member.getMemberId());  // 화면에 입력된 값을 DB 저장
+			pstmt.setString(1, member.getMemberId()); //화면에 입력된 값을 DB 저장
 			pstmt.setString(2, member.getPasswd());
 			pstmt.setString(3, member.getName());
 			pstmt.setString(4, member.getGender());
-			pstmt.executeUpdate();  // 쿼리문 실행 함수
-			
+			pstmt.executeUpdate();  //쿼리문 실행 함수
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCUtil.close(conn, pstmt);
 		}
 	}
+	
 	
 	//회원 목록
 	public ArrayList<Member> getListAll(){
 		ArrayList<Member> memberList = new ArrayList<>();
 		
 		try {
-			conn = JDBCUtil.getConnection();  //db연결
-			//칼럼에서 가입일이 생략된 경우이므로 열을 표기해야함.
+			conn = JDBCUtil.getConnection(); //db 연결
 			String sql = "SELECT * FROM t_member ORDER BY joindate DESC";
-			pstmt = conn.prepareStatement(sql);   //sql처리 객체 생성
-			rs = pstmt.executeQuery();  // select 실행문
+			pstmt = conn.prepareStatement(sql); //sql 처리 객체 생성
+			rs = pstmt.executeQuery();  //select 실행문
 			while(rs.next()) {
 				Member member = new Member();
-				member.setMemberId(rs.getString("memberid"));  // db에서 가져와서 member에 세팅
+				member.setMemberId(rs.getString("memberid")); //db에서 가져와서 member에 세팅
 				member.setPasswd(rs.getString("passwd"));
 				member.setName(rs.getString("name"));
 				member.setGender(rs.getString("gender"));
@@ -56,6 +56,7 @@ public class MemberDAO {
 				memberList.add(member);
 			}
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			JDBCUtil.close(conn, pstmt, rs);
@@ -64,56 +65,55 @@ public class MemberDAO {
 	}
 	
 	//로그인 체크
-		public Boolean checkLogin(Member member) {
-			try {
-				conn = JDBCUtil.getConnection(); //db 연결
-				String sql = "SELECT * FROM t_member WHERE memberid=? and passwd=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, member.getMemberId());
-				pstmt.setString(2, member.getPasswd());
-				rs = pstmt.executeQuery();
-				if(rs.next()) { //아이디와 비밀번호가 일치하면
-					return true;
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				JDBCUtil.close(conn, pstmt, rs);
+	public Boolean checkLogin(Member member) {
+		try {
+			conn = JDBCUtil.getConnection(); //db 연결
+			String sql = "SELECT * FROM t_member WHERE memberid=? and passwd=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getMemberId());
+			pstmt.setString(2, member.getPasswd());
+			rs = pstmt.executeQuery();
+			if(rs.next()) { //아이디와 비밀번호가 일치하면
+				return true;
 			}
-			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(conn, pstmt, rs);
 		}
+		return false;
+	}
+	
+	/*public Boolean checkLogin(String memberId, String password) {
 		
-		/*public Boolean checkLogin(String memberId, String password) {
-			
-			try {
-				conn = JDBCUtil.getConnection(); //db 연결
-				String sql = "SELECT * FROM t_member WHERE memberid=? and passwd=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, memberId);
-				pstmt.setString(2, password);
-				rs = pstmt.executeQuery();
-				if(rs.next()) { //아이디와 비밀번호가 일치하면
-					return true;
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				JDBCUtil.close(conn, pstmt, rs);
+		try {
+			conn = JDBCUtil.getConnection(); //db 연결
+			String sql = "SELECT * FROM t_member WHERE memberid=? and passwd=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, password);
+			rs = pstmt.executeQuery();
+			if(rs.next()) { //아이디와 비밀번호가 일치하면
+				return true;
 			}
-			return false;
-		}*/
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(conn, pstmt, rs);
+		}
+		return false;
+	}*/
 	
 	//회원 이름 가져오기 메소드
 	public String getNameByLogin(String memberId) {
-		
 		try {
-			conn = JDBCUtil.getConnection();  //db연결
+			conn = JDBCUtil.getConnection(); //db 연결
 			String sql = "SELECT name FROM t_member WHERE memberId=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);
 			rs = pstmt.executeQuery();
-			if(rs.next()) { // 같은 이름이 있으면
-				return rs.getString("name");  //DB테이블에서 가져옴
+			if(rs.next()) {  //같은 이름이 있으면
+				return rs.getString("name"); //db에서 가져옴
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -125,48 +125,48 @@ public class MemberDAO {
 	public void deleteMember(String memberId) {
 		
 		try {
-			conn = JDBCUtil.getConnection();  //db연결
-			String sql = "DELETE FROM t_member WHERE memberid=?";
+			conn = JDBCUtil.getConnection(); //db 연결
+			String sql = "DELETE FROM t_member WHERE memberId=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCUtil.close(conn, pstmt);
 		}
 	}
 	
-	//회원 상세보기
+	//회원 상세 보기
 	public Member getMember(String memberId) {
-		Member member = new Member();
-			try {
-				conn = JDBCUtil.getConnection();
-				String sql = "SELECT * FROM t_member WHERE memberid=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, memberId);  // 아이디 연결 (바인딩)
-				rs = pstmt.executeQuery();
-				if(rs.next()) {  // 반환 객체 1개 있으면
-					member.setMemberId(rs.getString("memberid"));
-					member.setPasswd(rs.getString("passwd"));
-					member.setName(rs.getString("name"));
-					member.setGender(rs.getString("gender"));
-					member.setJoinDate(rs.getDate("joindate"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				JDBCUtil.close(conn, pstmt, rs);
+		Member member = new Member();  //member 객체 생성
+		try {
+			conn= JDBCUtil.getConnection();
+			String sql = "SELECT * FROM t_member WHERE memberId=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);  //아이디 바인딩(binding)
+			rs = pstmt.executeQuery();
+			if(rs.next()) { //반환 객체가 1개 있으면
+				member.setMemberId(rs.getString("memberId"));
+				member.setPasswd(rs.getString("passwd"));
+				member.setName(rs.getString("name"));
+				member.setGender(rs.getString("gender"));
+				member.setJoinDate(rs.getDate("joindate"));
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(conn, pstmt, rs);
+		}
 		return member;
 	}
 	
-	
-	//회원 수정 
+	//회원 수정
 	public void updateMember(Member member) {
 		try {
 			conn = JDBCUtil.getConnection();
-			String sql = "UPDATE t_member SET passwd=?, name=?, gender=? WHERE memberid=?";
+			String sql = "UPDATE t_member SET passwd=?, name=?, gender=? "
+							+ "WHERE memberId=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getPasswd());
 			pstmt.setString(2, member.getName());
@@ -175,9 +175,13 @@ public class MemberDAO {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCUtil.close(conn, pstmt);
 		}
 	}
 	
 }
+
+
+
+
