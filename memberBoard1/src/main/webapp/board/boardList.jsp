@@ -89,7 +89,7 @@
 					<% if(endPage > startPage){ %>
 					<a href="./boardList.jsp?pageNum=<%=startPage +1%>">다음</a>
 					<% }else{ %>
-					<a href="./boardList.jsp?pageNum=<%=endPage%>">다음</a>
+					<a href="./boardList.jsp?pageNum=<%=endPage %>">다음</a>
 					<% } %>	
 			</div>
 			<div class="btnWrite">
