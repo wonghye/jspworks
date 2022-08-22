@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JDBCUtil {
+public class JDBCUtil2 {
 
 	private static String dirverClass = "oracle.jdbc.OracleDriver";
 	private static String url ="jdbc:oracle:thin:@localhost:1521:xe";

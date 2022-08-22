@@ -10,6 +10,34 @@
 <link rel="stylesheet" href="../resources/css/common.css">
 <jsp:useBean id="boardDAO" class="com.repository.BoardDAO" scope="application" />
 </head>
+<%
+	String pageNum = request.getParameter("pageNum");
+	if(pageNum == null){ //파라미터로 전달된 page num 없을때 
+		pageNum = "1";  // 무조건 1 page로 set
+	}
+	
+	// 현재 페이지
+	int currentPage = Integer.parseInt(pageNum);
+	
+	//페이지당 게시글 수
+	int pageSize = 10;
+	
+	//게시글 첫 행
+	//1page -> 1번 start , 2page -> 11번 start ...
+	int startRow = (currentPage -1) * pageSize +1;
+	
+	//게시글 총 개수
+	int total = boardDAO.getBoardCount();
+	
+	//시작페이지
+	int startPage = startRow/ pageSize + 1;
+	
+	//마지막 페이지
+	// ceil() ex 13/10 -> ceil(1.3) - > (int) 2.0 -> 2
+	
+	int endPage = (int) Math.ceil((double)total/pageSize);
+	
+%>
 <body>
 	<jsp:include page="../menu.jsp" />
 	<div id="container">
@@ -17,6 +45,7 @@
 			<h1>게시판 목록</h1>
 		</div>
 		<div>
+			<p style="text-align: left; margin-left: 35%;margin-bottom: 10px;">게시글 총 개수 : <%=total %> <%-- <%=endPage %> --%> </p>
 			<table class="tbl_list">
 					<thead>
 					<tr>
@@ -28,8 +57,8 @@
 				</thead>
 				<tbody>
 					<%
-						for(int i =0; i < boardDAO.getListAll().size(); i++){
-							Board board = boardDAO.getListAll().get(i);
+						for(int i =0; i < boardDAO.getListAll(startRow, pageSize).size(); i++){
+							Board board = boardDAO.getListAll(startRow, pageSize).get(i);
 					%>
 					<tr>
 						<td><%=board.getBnum() %></td>
@@ -41,6 +70,28 @@
 				<%	} 	%>
 				</tbody>
 			</table>
+			<div style="text-align: center; margin-top: 10px;">
+				<% if(startPage > 1){ %>
+					<a href="./boardList.jsp?pageNum=<%=startPage-1%>">이전</a>
+				<% }else{ %>
+					<a href="./boardList.jsp?pageNum=<%=startPage%>">이전</a>
+				<%  }%>
+				
+				 <%	for(int i =1; i <=endPage; i++){
+				%>
+					<!-- 현재페이지 활성화 굵게 -->
+					<% if(currentPage == i){ %>
+						<a href="./boardList.jsp?pageNum=<%= i%>"><b><%= i%></b></a>
+					<% }else{ %>
+						<a href="./boardList.jsp?pageNum=<%= i%>"><%= i%></a>
+					<% } %>
+				<% } %>
+					<% if(endPage > startPage){ %>
+					<a href="./boardList.jsp?pageNum=<%=startPage +1%>">다음</a>
+					<% }else{ %>
+					<a href="./boardList.jsp?pageNum=<%=endPage%>">다음</a>
+					<% } %>	
+			</div>
 			<div class="btnWrite">
 				<a href="./writeForm.jsp">
 					<button type="button">글쓰기</button>
