@@ -146,12 +146,37 @@ public class MainController extends HttpServlet {
 			request.setAttribute("msg", "update"); 
 			nextPage = "/memberResult.jsp";
 		}else if(command.equals("/boardList.do")) { //게시판 목록 페이지 요청
+			String pageNum = request.getParameter("pageNum");
+			if(pageNum == null) {  // 게시판 메뉴를 클릭햇을때
+				pageNum = "1";
+			}
+			//현재 페이지
+			int currentPage = Integer.parseInt(pageNum);
+			int pageSize = 10;  // page당 글의 개수
+			
+			int startRow = (currentPage -1) * pageSize +1;   // 첫행
+			
+			//게시글 총 개수
+			int total = boardDAO.getBoardCount();
+			
+			//시작페이지
+			int startPage = startRow / pageSize +1;
+			
+			//마지막 페이지
+			//14 -> 2page ,24->3 ,
+			// 14/10 = 1.4 ceil (1.4) = 2.0 
+			int endPage = (int) Math.ceil((double) total/pageSize);
+			
 			
 			//게시글 목록 db 처리
-			ArrayList<Board> boardList = boardDAO.getListAll();
+			ArrayList<Board> boardList = boardDAO.getListAll(startRow,pageSize);
 			
-			//model - 데이터
+			//model - 데이터 = 글목록, 총개수, 마지막페이지, 현재페이지 , 다음페이지
 			request.setAttribute("boardList", boardList);
+			request.setAttribute("total", total);
+			request.setAttribute("endPage", endPage );
+			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("startPage", startPage);
 			
 			nextPage = "/board/boardList.jsp";
 		}else if(command.equals("/writeForm.do")) { //글쓰기 페이지 요청

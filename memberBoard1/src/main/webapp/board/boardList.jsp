@@ -86,6 +86,7 @@
 						<a href="./boardList.jsp?pageNum=<%= i%>"><%= i%></a>
 					<% } %>
 				<% } %>
+					<!-- 마지막 페이지가 start page와 작거나 같으면 end page로 설정 -->
 					<% if(endPage > startPage){ %>
 					<a href="./boardList.jsp?pageNum=<%=startPage +1%>">다음</a>
 					<% }else{ %>

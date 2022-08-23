@@ -20,7 +20,7 @@ public class MemberDAO {
 		try {
 			conn = JDBCUtil.getConnection();
 			//칼럼에서 가입일이 생략된 경우이므로 열을 표기해야 함
-			String sql = "INSERT INTO t_member(memberid, passwd, name, gender)"
+			String sql = "INSERT INTO t_member2(memberid, passwd, name, gender)"
 					+ " VALUES (?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getMemberId()); //화면에 입력된 값을 DB 저장
@@ -42,7 +42,7 @@ public class MemberDAO {
 		
 		try {
 			conn = JDBCUtil.getConnection(); //db 연결
-			String sql = "SELECT * FROM t_member ORDER BY joindate DESC";
+			String sql = "SELECT * FROM t_member2 ORDER BY joindate DESC";
 			pstmt = conn.prepareStatement(sql); //sql 처리 객체 생성
 			rs = pstmt.executeQuery();  //select 실행문
 			while(rs.next()) {
@@ -68,7 +68,7 @@ public class MemberDAO {
 	public Boolean checkLogin(Member member) {
 		try {
 			conn = JDBCUtil.getConnection(); //db 연결
-			String sql = "SELECT * FROM t_member WHERE memberid=? and passwd=?";
+			String sql = "SELECT * FROM t_member2 WHERE memberid=? and passwd=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getMemberId());
 			pstmt.setString(2, member.getPasswd());
@@ -88,7 +88,7 @@ public class MemberDAO {
 		
 		try {
 			conn = JDBCUtil.getConnection(); //db 연결
-			String sql = "SELECT * FROM t_member WHERE memberid=? and passwd=?";
+			String sql = "SELECT * FROM t_member2 WHERE memberid=? and passwd=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);
 			pstmt.setString(2, password);
@@ -108,7 +108,7 @@ public class MemberDAO {
 	public String getNameByLogin(String memberId) {
 		try {
 			conn = JDBCUtil.getConnection(); //db 연결
-			String sql = "SELECT name FROM t_member WHERE memberId=?";
+			String sql = "SELECT name FROM t_member2 WHERE memberId=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);
 			rs = pstmt.executeQuery();
@@ -126,7 +126,7 @@ public class MemberDAO {
 		
 		try {
 			conn = JDBCUtil.getConnection(); //db 연결
-			String sql = "DELETE FROM t_member WHERE memberId=?";
+			String sql = "DELETE FROM t_member2 WHERE memberId=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);
 			pstmt.executeUpdate();
@@ -142,7 +142,7 @@ public class MemberDAO {
 		Member member = new Member();  //member 객체 생성
 		try {
 			conn= JDBCUtil.getConnection();
-			String sql = "SELECT * FROM t_member WHERE memberId=?";
+			String sql = "SELECT * FROM t_member2 WHERE memberId=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);  //아이디 바인딩(binding)
 			rs = pstmt.executeQuery();
@@ -165,7 +165,7 @@ public class MemberDAO {
 	public void updateMember(Member member) {
 		try {
 			conn = JDBCUtil.getConnection();
-			String sql = "UPDATE t_member SET passwd=?, name=?, gender=? "
+			String sql = "UPDATE t_member2 SET passwd=?, name=?, gender=? "
 							+ "WHERE memberId=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getPasswd());
